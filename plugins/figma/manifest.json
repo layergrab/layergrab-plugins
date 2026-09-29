@@ -1,0 +1,19 @@
+{
+  "name": "LayerGrab",
+  "id": "1686365512269052417",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": [
+    "figma"
+  ],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://api.layergrab.com",
+      "https://*.r2.cloudflarestorage.com",
+      "https://r2.apimodels.app"
+    ],
+    "reasoning": "Signs in to the user's LayerGrab account, uploads the selected image for splitting, and downloads the resulting layers (LayerGrab's file storage and its AI model's image storage)."
+  }
+}

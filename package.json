@@ -1,0 +1,12 @@
+{
+  "name": "layergrab-plugins",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "install:all": "pnpm -C packages/core install && pnpm -C plugins/figma install",
+    "test": "pnpm -C packages/core test",
+    "sync:chrome": "node scripts/sync-chrome-core.mjs",
+    "build": "pnpm sync:chrome && pnpm -C plugins/figma build"
+  }
+}

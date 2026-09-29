@@ -1,0 +1,14 @@
+{
+  "name": "layergrab-figma",
+  "private": true,
+  "license": "MIT",
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "build": "esbuild src/code.js --bundle --format=iife --target=es2017 --outfile=code.js",
+    "watch": "pnpm build --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

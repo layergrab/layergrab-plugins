@@ -1,0 +1,18 @@
+{
+  "name": "@layergrab/core",
+  "private": true,
+  "license": "MIT",
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.12.1",
+  "description": "Shared by all LayerGrab plugins: apimodels.app client, layout math, image decode/resize.",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "vendor": "node scripts/vendor.mjs",
+    "live-split": "node scripts/live-split.mjs"
+  },
+  "devDependencies": {
+    "jpeg-js": "^0.4.4",
+    "pako": "^3.0.2",
+    "upng-js": "^2.1.0"
+  }
+}
