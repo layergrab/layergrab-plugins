@@ -1,0 +1,30 @@
+{
+  "name": "layergrab-sketch",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.12.1",
+  "skpm": {
+    "name": "LayerGrab",
+    "manifest": "src/manifest.json",
+    "main": "layergrab.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ],
+    "description": "Split any image into editable, named layers with AI, right in Sketch.",
+    "homepage": "https://layergrab.com/sketch-plugin",
+    "author": "LayerGrab <contact@layergrab.com>",
+    "appcast": "https://layergrab.com/sketch/appcast.json"
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "link": "skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^1.0.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.23.9",
+    "@skpm/timers": "^0.2.1"
+  },
+  "description": "Split any image into editable, named layers with AI, right in Sketch."
+}

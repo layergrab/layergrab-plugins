@@ -2,3 +2,5 @@ node_modules/
 plugins/chrome/lib/hub.js
 plugins/figma/code.js
 .DS_Store
+plugins/sketch/layergrab.sketchplugin/
+plugins/sketch/pnpm-lock.yaml

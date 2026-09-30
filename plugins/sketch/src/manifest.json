@@ -1,0 +1,21 @@
+{
+  "compatibleVersion": "2023.1",
+  "bundleVersion": 1,
+  "identifier": "com.layergrab.sketch",
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "LayerGrab",
+      "identifier": "layergrab.split",
+      "script": "./split.js",
+      "shortcut": "ctrl shift l"
+    }
+  ],
+  "menu": {
+    "title": "LayerGrab",
+    "isRoot": true,
+    "items": [
+      "layergrab.split"
+    ]
+  }
+}
