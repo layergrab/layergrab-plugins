@@ -10,6 +10,8 @@ const KEY = 'layergrab-key'
 const CLIENT_NAME = 'LayerGrab for Chrome'
 const SOURCE = 'chrome'
 const MAX_EDGE = 4096
+// The model refuses anything under 512 x 512 worth of pixels (uploadScale in packages/core/layout.js).
+const MIN_PIXELS = 262144
 const MAX_BYTES = 20 * 1024 * 1024
 const DISCONNECTED = 'You were signed out from layergrab.com. Log in again to keep splitting.'
 
@@ -219,19 +221,22 @@ async function capture() {
   }
 }
 
-// The model takes PNG or JPEG up to 4096 px. Anything else, or anything
-// larger, is redrawn: PNG when it has transparency, otherwise JPEG 0.92.
+// The model takes PNG or JPEG from 262,144 pixels up to 4096 px on the long
+// edge. Anything else, smaller or larger, is redrawn (a small image enlarged
+// to just past the minimum): PNG when it has transparency, otherwise JPEG 0.92.
 async function prepare(blob) {
   const bitmap = await createImageBitmap(blob).catch(() => null)
   if (!bitmap) throw new Error('This image could not be read. Try a PNG or JPG.')
   const long = Math.max(bitmap.width, bitmap.height)
-  if (long <= MAX_EDGE && (blob.type === 'image/png' || blob.type === 'image/jpeg') && blob.size <= MAX_BYTES) {
+  const pixels = bitmap.width * bitmap.height
+  if (long <= MAX_EDGE && pixels >= MIN_PIXELS && (blob.type === 'image/png' || blob.type === 'image/jpeg') && blob.size <= MAX_BYTES) {
     bitmap.close()
     return { bytes: new Uint8Array(await blob.arrayBuffer()), mime: blob.type }
   }
-  const scale = Math.min(1, MAX_EDGE / long)
+  const scale = Math.min(MAX_EDGE / long, Math.max(1, Math.sqrt(MIN_PIXELS / pixels) * 1.01))
   const canvas = new OffscreenCanvas(Math.round(bitmap.width * scale), Math.round(bitmap.height * scale))
   const ctx = canvas.getContext('2d', { willReadFrequently: true })
+  ctx.imageSmoothingQuality = 'high'
   ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height)
   bitmap.close()
   let alpha = false

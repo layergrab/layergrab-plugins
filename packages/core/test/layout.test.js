@@ -1,6 +1,6 @@
 const test = require('node:test')
 const assert = require('node:assert/strict')
-const { planPlacement, resizeRGBA, clipToCanvas, uploadSize } = require('../layout.js')
+const { planPlacement, resizeRGBA, clipToCanvas, uploadSize, uploadScale, MIN_UPLOAD_PIXELS } = require('../layout.js')
 
 test('planPlacement scales boxes from base pixels to document pixels', () => {
   // Base came back at 2x the document, as in the poster test.
@@ -58,4 +58,20 @@ test('clipToCanvas trims a layer hanging off the top-left corner', () => {
 test('uploadSize caps the long edge at 2048 and keeps aspect', () => {
   assert.deepEqual(uploadSize(6000, 4000), { width: 2048, height: 1365 })
   assert.deepEqual(uploadSize(880, 1184), { width: 880, height: 1184 })
+})
+
+test('uploadSize enlarges images under the model minimum of 262,144 pixels', () => {
+  // The banner a real user was refused on: 573 x 239 = 136,947 px.
+  const s = uploadSize(573, 239)
+  assert.ok(s.width * s.height >= MIN_UPLOAD_PIXELS, `${s.width} x ${s.height}`)
+  assert.ok(Math.abs(s.width / s.height - 573 / 239) < 0.01)
+  assert.deepEqual(uploadSize(512, 512), { width: 512, height: 512 })
+})
+
+test('uploadScale: 2x for detail, more only when the minimum needs it, never past the long edge cap', () => {
+  assert.equal(uploadScale(800, 600, { maxUp: 2 }), 2)
+  const k = uploadScale(100, 100, { maxUp: 2 })
+  assert.ok(k > 5 && 100 * k * 100 * k >= MIN_UPLOAD_PIXELS)
+  assert.equal(uploadScale(4000, 40, { maxEdge: 2048 }), 2048 / 4000)
+  assert.equal(uploadScale(1000, 1000), 1)
 })

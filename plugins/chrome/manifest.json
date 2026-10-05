@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "LayerGrab — Image to Layers",
   "short_name": "LayerGrab",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Split any image on the web into editable, named layers with AI. Right-click an image, or drop one into the side panel.",
   "minimum_chrome_version": "116",
   "icons": {

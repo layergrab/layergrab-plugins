@@ -142,12 +142,29 @@ function clipToCanvas(data, width, height, left, top, canvasW, canvasH) {
   return { data: out, width: cw, height: ch, left: x0, top: y0 }
 }
 
-/** Long edge the upload is scaled to. Seedream's top tier is 2K. */
+// Seedream refuses an image under 262,144 pixels (512 x 512) outright:
+// "expected the pixel to be at least 262144px". Small uploads are enlarged to
+// just past it; the plugins place the result by doc/base, so the layers still
+// land at the original size.
+const MIN_UPLOAD_PIXELS = 262144
+
+/**
+ * Factor an image is scaled by before upload: at most maxUp (1 = never
+ * enlarge just for detail), the long edge within maxEdge, and always enough
+ * pixels for the model. The 1% margin keeps rounding from landing a pixel short.
+ */
+function uploadScale(w, h, { maxEdge = 2048, maxUp = 1 } = {}) {
+  const cap = maxEdge / Math.max(w, h)
+  let k = Math.min(maxUp, cap)
+  if (w * h * k * k < MIN_UPLOAD_PIXELS) k = Math.min(cap, Math.sqrt(MIN_UPLOAD_PIXELS / (w * h)) * 1.01)
+  return k
+}
+
+/** Pixel size the upload is scaled to. Seedream's top tier is 2K. */
 function uploadSize(docW, docH, maxEdge = 2048) {
-  const long = Math.max(docW, docH)
-  if (long <= maxEdge) return { width: docW, height: docH }
-  const k = maxEdge / long
+  const k = uploadScale(docW, docH, { maxEdge })
+  if (k === 1) return { width: docW, height: docH }
   return { width: Math.round(docW * k), height: Math.round(docH * k) }
 }
 
-module.exports = { planPlacement, resizeRGBA, clipToCanvas, uploadSize }
+module.exports = { planPlacement, resizeRGBA, clipToCanvas, uploadSize, uploadScale, MIN_UPLOAD_PIXELS }

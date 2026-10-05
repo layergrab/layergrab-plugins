@@ -4,12 +4,14 @@
 // image-filled rectangles directly above the original.
 
 const hub = require('../../../packages/core/hub.js')
+const { uploadScale } = require('../../../packages/core/layout.js')
 
 const KEY_STORAGE = 'layergrab-key'
 const CLIENT_NAME = 'LayerGrab for Figma'
 const SOURCE = 'figma'
 // Seedream's top tier is 2K; small frames are exported at up to 2x so the
-// model has real detail to work with.
+// model has real detail to work with, and further when that is still under
+// the model's minimum pixel count (see uploadScale).
 const MAX_UPLOAD_EDGE = 2048
 
 figma.showUI(__html__, { width: 320, height: 470, themeColors: true })
@@ -155,8 +157,9 @@ async function split(hint, signal) {
   }
 
   status('Reading the image…', `"${node.name}", ${Math.round(width)} × ${Math.round(height)}`, 3)
-  const scale = Math.max(0.1, Math.min(2, MAX_UPLOAD_EDGE / Math.max(width, height)))
-  const png = await node.exportAsync({ format: 'PNG', constraint: { type: 'SCALE', value: scale } })
+  const scale = Math.max(0.1, uploadScale(width, height, { maxEdge: MAX_UPLOAD_EDGE, maxUp: 2 }))
+  // WIDTH rather than SCALE: a tiny frame can need more than the largest scale factor export accepts.
+  const png = await node.exportAsync({ format: 'PNG', constraint: { type: 'WIDTH', value: Math.max(1, Math.round(width * scale)) } })
   check()
 
   const result = await hub.split({

@@ -8,12 +8,13 @@ import { avatarImage, rememberAccount, rememberedName } from './profile'
 const { Group, Image, Rectangle } = sketch
 
 // The upload's long edge. Seedream's top tier is 2K, and small layers are
-// exported at up to 2x so the model has real detail to work from.
+// exported at up to 2x so the model has real detail to work from, and further
+// when that is still under the model's minimum pixel count (see uploadScale).
 const MAX_UPLOAD_EDGE = 2048
 
 function exportScale(frame) {
-  const long = Math.max(frame.width, frame.height)
-  return Math.max(0.1, Math.min(2, MAX_UPLOAD_EDGE / long))
+  const { uploadScale } = require('../../../packages/core/layout.js')
+  return Math.max(0.1, uploadScale(frame.width, frame.height, { maxEdge: MAX_UPLOAD_EDGE, maxUp: 2 }))
 }
 
 /**
