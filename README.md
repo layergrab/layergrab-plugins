@@ -2,9 +2,9 @@
 
 Source code of the [LayerGrab](https://layergrab.com) plugins for **Figma**, **Sketch** and **Chrome**, and the small client library they share. LayerGrab splits one image into up to 16 separate transparent layers, one per element, with the background filled in behind them, or pulls out just the object you name. This repository is the code that runs inside the design tool; the splitting itself happens on LayerGrab's servers with a LayerGrab account.
 
-- Figma: [layergrab.com/figma-plugin](https://layergrab.com/figma-plugin)
+- Figma: [Figma Community](https://www.figma.com/community/plugin/1686365512269052417) · [layergrab.com/figma-plugin](https://layergrab.com/figma-plugin)
 - Sketch: [layergrab.com/sketch-plugin](https://layergrab.com/sketch-plugin)
-- Chrome: [layergrab.com/chrome-extension](https://layergrab.com/chrome-extension)
+- Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/layergrab-%E2%80%94-image-to-laye/cfkdlnfbbdbihhpbmciigdpbbpeinapa) · [layergrab.com/chrome-extension](https://layergrab.com/chrome-extension)
 - Web app and Photoshop: [layergrab.com](https://layergrab.com)
 
 Published so that reviewers and users can read what the plugins do. Issues and pull requests are welcome; the Photoshop plugin is not in this repository yet.
