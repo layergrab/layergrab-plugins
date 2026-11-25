@@ -5,9 +5,10 @@ Source code of the [LayerGrab](https://layergrab.com) plugins for **Figma**, **S
 - Figma: [Figma Community](https://www.figma.com/community/plugin/1686365512269052417) · [layergrab.com/figma-plugin](https://layergrab.com/figma-plugin)
 - Sketch: [layergrab.com/sketch-plugin](https://layergrab.com/sketch-plugin)
 - Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/layergrab-%E2%80%94-image-to-laye/cfkdlnfbbdbihhpbmciigdpbbpeinapa) · [layergrab.com/chrome-extension](https://layergrab.com/chrome-extension)
-- Web app and Photoshop: [layergrab.com](https://layergrab.com)
+- Adobe Photoshop: [Adobe Creative Cloud Marketplace](https://exchange.adobe.com/apps/cc/86eb1b02/layergrab) · [layergrab.com/plugin-for-photoshop](https://layergrab.com/plugin-for-photoshop)
+- Web app: [layergrab.com](https://layergrab.com)
 
-Published so that reviewers and users can read what the plugins do. Issues and pull requests are welcome; the Photoshop plugin is not in this repository yet.
+Published so that reviewers and users can read what the plugins do. Issues and pull requests are welcome; the plugin for Adobe Photoshop is not in this repository yet (it is on the Adobe Creative Cloud Marketplace).
 
 ## What is here
 
